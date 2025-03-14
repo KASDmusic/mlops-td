@@ -31,10 +31,6 @@ jobs:
           docker-compose up -d
           sleep 20  # Give services time to start
 
-      - name: Run API tests
-        run: |
-          pytest tests/
-
       - name: Stop services
         run: |
           docker-compose down

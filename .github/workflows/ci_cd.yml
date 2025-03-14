@@ -8,31 +8,10 @@ on:
     branches:
       - main
 
-env:
-  POSTGRES_DB: mydatabase
-  POSTGRES_USER: myuser
-  POSTGRES_PASSWORD: mypassword
-  DATABASE_URL: postgresql://myuser:mypassword@localhost:5432/mydatabase
-
 jobs:
   test:
     name: Run Tests
     runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_DB: mydatabase
-          POSTGRES_USER: myuser
-          POSTGRES_PASSWORD: mypassword
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U myuser -d mydatabase"
-          --health-interval 10s
-          --health-timeout 3s
-          --health-retries 20
 
     steps:
       - name: Checkout code

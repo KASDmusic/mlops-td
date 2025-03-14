@@ -56,11 +56,11 @@ jobs:
       - name: Build and push Docker images to GHCR
         run: |
           docker-compose build
-          docker tag user_api ghcr.io/${{ github.repository }}/user_api:latest
-          docker tag user_interface ghcr.io/${{ github.repository }}/user_interface:latest
-          docker tag admin_api ghcr.io/${{ github.repository }}/admin_api:latest
-          docker tag admin_interface ghcr.io/${{ github.repository }}/admin_interface:latest
-          docker push ghcr.io/${{ github.repository }}/user_api:latest
-          docker push ghcr.io/${{ github.repository }}/user_interface:latest
-          docker push ghcr.io/${{ github.repository }}/admin_api:latest
-          docker push ghcr.io/${{ github.repository }}/admin_interface:latest
+          docker tag user_api ghcr.io/${{ kasdmusic }}/user_api:latest
+          docker tag user_interface ghcr.io/${{ kasdmusic }}/user_interface:latest
+          docker tag admin_api ghcr.io/${{ kasdmusic }}/admin_api:latest
+          docker tag admin_interface ghcr.io/${{ kasdmusic }}/admin_interface:latest
+          docker push ghcr.io/${{ kasdmusic }}/user_api:latest
+          docker push ghcr.io/${{ kasdmusic }}/user_interface:latest
+          docker push ghcr.io/${{ kasdmusic }}/admin_api:latest
+          docker push ghcr.io/${{ kasdmusic }}/admin_interface:latest

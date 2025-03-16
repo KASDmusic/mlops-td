@@ -34,4 +34,4 @@ def feedback(feedback: Feedback):
     return {"comment": feedback.comment, "rating": feedback.rating}
 
 if __name__ == "__main__":
-    uvicorn.run(app, uds="/tmp/fastapi-user_api.sock")  # Socket UNIX
+    uvicorn.run(app, host="0.0.0.0", port=8000)

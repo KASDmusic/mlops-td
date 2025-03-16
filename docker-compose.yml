@@ -4,50 +4,54 @@ services:
   user_api:
     build:
       context: ./user_api
-    volumes:
-      - /tmp:/tmp  # Share /tmp for the Unix Domain Socket
     restart: always
     depends_on:
       postgres:
         condition: service_healthy
     networks:
-      - network
+      network:
+        aliases:
+          - user-api
+    ports:
+      - "8000:8000"
 
   user_interface:
     build:
       context: ./user_interface
     depends_on:
       - user_api
-    volumes:
-      - /tmp:/tmp
     ports:
       - "8501:8501"
     networks:
-      - network
+      network:
+        aliases:
+          - user-interface
 
   admin_api:
     build:
       context: ./admin_api
-    volumes:
-      - /tmp:/tmp  # Share /tmp for the Unix Domain Socket
     depends_on:
       postgres:
         condition: service_healthy
     restart: always
     networks:
-      - network
+      network:
+        aliases:
+          - admin-api
+    ports:
+      - "8001:8001"
 
   admin_interface:
     build:
       context: ./admin_interface
     depends_on:
       - admin_api
-    volumes:
-      - /tmp:/tmp
     ports:
       - "8502:8502"
     networks:
-      - network
+      network:
+        aliases:
+          - admin-interface
 
   postgres:
     image: postgres:latest
@@ -63,7 +67,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./db_service/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - network
+      network:
+        aliases:
+          - postgres
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U myuser -d mydatabase"]
       interval: 10s

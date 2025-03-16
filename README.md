@@ -166,5 +166,51 @@ Il s'agit de concevoir une solution prenant en compte les éléments mentionnés
 
 Il s'agit de concevoir une plateforme d'annotation automatique de données brutes. Cette plateforme devra héberger des outils de traitement automatique des langues.
 
+![Projet](./schema_architecture_pt3.png)
+
+```diff
+
+1. CI/CD & Déploiement
+
+- GitHub Actions CI/CD : build, test et déploiement automatisés des images Docker.
+- Docker Registry : stockage centralisé des images.
+- Kubernetes / Minikube : déploiement des conteneurs sur un cluster local (Minikube) ou cloud.
+
+2. NGINX Proxy SSL + Routing
+
+- Reverse proxy pour gérer le routage des requêtes HTTP/HTTPS.
+- Terminaison SSL : sécurise les connexions avec HTTPS.
+- Routing vers les services internes via Ingress.
+
+3. Backend - API REST ou Kafka
+
+- API REST (FastAPI) : communication synchrone avec les services.
+- Kafka (optionnel) : communication asynchrone pour gestion de flux de données.
+- Connecté à la base PostgreSQL et aux microservices de NLP.
+
+4. Base de données - PostgreSQL
+
+- Base relationnelle pour stocker les données utilisateurs, commentaires, feedback.
+- Accessible par l’API backend pour lecture/écriture.
+
+5. Microservices NLP (Machine Learning)
+
+- Service NER spaCy : reconnaissance d’entités nommées dans le texte.
+- Service POS (Part-of-Speech) : analyse grammaticale des mots.
+- Service Résumé (Summarizer) : génération de résumés de textes.
+
+6. Interface Utilisateur - Streamlit
+
+- Application frontend déployée dans un conteneur Docker.
+- Basée sur Streamlit pour interface web interactive.
+- Connectée à l’API backend pour requêtes et affichage des résultats.
+
+7. Utilisateur Web
+
+- Accès via navigateur web.
+- Interaction avec l’application via l’interface Streamlit.
+- Flux : utilisateur → NGINX → Streamlit → API REST → microservices/PostgreSQL.
+
+```
 ---
 
